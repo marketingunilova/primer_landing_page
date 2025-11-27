@@ -260,24 +260,30 @@
         <aside class="form-section">
             <h3>FORMULARIO DE INSCRIPCIÓN</h3>
             <form action="#" method="POST">
-                <div class="form-fields-grid">
+                <!-- Formulario -->
+                <form asp-action="Registrar" method="post" class="form-container">
+                    @Html.AntiForgeryToken()
+                    
                     <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required>
+                        <label for="nombre">Nombre *</label>
+                        <input asp-for="nombre" class="form-input" placeholder="Nombre" />
+                        <span asp-validation-for="nombre" class="text-danger"></span>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label for="correo">Correo:</label>
-                        <input type="email" id="correo" name="correo" required>
+                        <label for="correo">Email *</label>
+                        <input asp-for="correo" class="form-input" placeholder="Email" />
+                        <span asp-validation-for="correo" class="text-danger"></span>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label for="telefono">Teléfono:</label>
-                        <input type="tel" id="telefono" name="telefono" required>
+                        <label for="telefono">Teléfono *</label>
+                        <input asp-for="telefono" class="form-input" placeholder="Teléfono" />
+                        <span asp-validation-for="telefono" class="text-danger"></span>
                     </div>
-                </div>
+                    
+                <button type="submit" class="btn-submit">¡QUIERO INSCRIBIRME AHORA!</button>
 
-                <button type="submit">¡QUIERO INSCRIBIRME AHORA!</button>
             </form>
         </aside>
         
