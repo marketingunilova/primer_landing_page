@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page: Carreras Técnicas</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #A62631;
+            color: white;
+        }
+
+        /* Botones de Pestañas */
+        .tab-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 2px solid #A62631;
+            background-color: white;
+            color: #A62631;
+            text-decoration: none;
+            border-radius: 20px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #A62631;
+            color: white;
+        }
+
+        /* Grid Layout (Para las secciones de contenido de los cursos) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        /* --- ESTILOS DEL FORMULARIO COMPACTO --- */
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px; 
+        }
+        
+        .form-fields-grid {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 20px; 
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            flex: 1 1 200px; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-size: 0.9em;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 0; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-section button {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px; 
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+
+        .form-section button:hover {
+            background-color: #218838;
+        }
+        /* --- FIN ESTILOS DEL FORMULARIO COMPACTO --- */
+
+        
+        .course-section {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .course-section h2 {
+            text-align: center;
+            color: #A62631;
+            margin-bottom: 20px;
+        }
+
+        .course-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .course-content {
+                flex-direction: row;
+                align-items: stretch;
+            }
+        }
+        
+        /* === ESTILOS DE VIDEO === */
+        
+        .video-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 796px;
+            max-height: 500px; 
+            margin: 0 auto;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%; 
+            max-width: 300px; 
+            max-height: 500px; 
+            margin: 0 auto;
+            background-color: #e0e0e0;
+            border: 1px dashed #999;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; 
+            border: none;
+        }
+
+        /* --- ESTILOS DEL CARRUSEL --- */
+        .carousel-container {
+            flex: 1;
+            min-height: 300px;
+            max-width: 796px;
+            max-height: 500px; 
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        .carousel-images {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-images img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+            object-fit: contain;
+            animation: fadeIn 0.5s;
+        }
+
+        .carousel-images img.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Botones de Navegación del Carrusel */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.5em;
+            line-height: 1;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(166, 38, 49, 0.8);
+        }
+
+        .carousel-btn.prev { left: 10px; border-radius: 5px 0 0 5px; }
+        .carousel-btn.next { right: 10px; border-radius: 0 5px 5px 0; }
+        /* --- FIN ESTILOS DEL CARRUSEL --- */
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Landing Page: Técnico en Mecatrónica y Mantenimiento Industrial</h1>
+        <h2><strong>¡NO TE QUEDES FUERA!</strong> Inscríbete Ahora.</h2>
+    </header>
+
+    <div class="container">
+
+        <div class="tab-buttons">
+            <a href="#mecatronica" class="tab-button"><strong>Tec. Mecatrónica</strong></a>
+            <a href="#mantenimiento" class="tab-button"><strong>Tec. Mantenimiento Industrial</strong></a>
+        </div>
+
+        <aside class="form-section">
+            <h3>FORMULARIO DE INSCRIPCIÓN</h3>
+            <form action="#" method="POST">
+                <div class="form-fields-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo:</label>
+                        <input type="email" id="correo" name="correo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                    </div>
+                </div>
+
+                <button type="submit">¡QUIERO INSCRIBIRME AHORA!</button>
+            </form>
+        </aside>
+        
+        <div class="grid-container">
+
+            <div class="content-column">
+
+                <section id="mecatronica" class="course-section">
+                    <h2>⚙️ Técnico en Mecatrónica</h2>
+                    <div class="course-content">
+                        <div class="video-container">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/Y_2kGtS0L-8"
+                                    title="Video Promocional Mecatrónica"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+
+                        <div class="carousel-container" id="carouselMecatronica">
+                            <button type="button" class="carousel-btn prev"
+                                onclick="moveCarousel('Mecatronica', -1)">&#10094;</button>
+
+                            <div class="carousel-images">
+                                <img src="MECATRONICA1.jpg" alt="Estudia con nosotros" class="active">
+                                <img src="MECATRONICA2.jpg" alt="Alta Empleabilidad">
+                                <img src="MECATRONICA3.jpg" alt="Domina PLCs, Robots, Sensores">
+                                <img src="MECATRONICA4.jpg" alt="Carrera Técnica en Mecatrónica">
+                                <img src="MECATRONICA5.jpg" alt="¡Contáctanos! Cupos limitados">
+                            </div>
+
+                            <button type="button" class="carousel-btn next"
+                                onclick="moveCarousel('Mecatronica', 1)">&#10095;</button>
+                        </div>
+                    </div>
+                </section>
+
+                <hr>
+
+                <section id="mantenimiento" class="course-section">
+                    <h2>🔧 Técnico en Mantenimiento Industrial</h2>
+                    <div class="course-content">
+                        <div class="video-container">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/jBuizjlJUok"
+                                    title="Video Promocional Mantenimiento Industrial"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="carousel-container" id="carouselMantenimiento">
+                            <button type="button" class="carousel-btn prev"
+                                onclick="moveCarousel('Mantenimiento', -1)">&#10094;</button>
+
+                            <div class="carousel-images">
+                                <img src="MANTENIMIENTO1.jpg" alt="Inscríbete en Mantenimiento Industrial"
+                                    class="active">
+                                <img src="MANTENIMIENTO2.jpg" alt="Demanda de técnicos en la industria">
+                                <img src="MANTENIMIENTO3.jpg"
+                                    alt="¿Qué aprenderás? Mecánica, Electricidad, Electrónica">
+                                <img src="MANTENIMIENTO4.jpg" alt="Carrera Técnica con validez oficial">
+                                <img src="MANTENIMIENTO5.jpg" alt="¡Inscríbete hoy!">
+                            </div>
+
+                            <button type="button" class="carousel-btn next"
+                                onclick="moveCarousel('Mantenimiento', 1)">&#10095;</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function moveCarousel(carouselId, direction) {
+            // 1. Obtener el contenedor principal del carrusel (por ID)
+            const carousel = document.getElementById('carousel' + carouselId);
+            if (!carousel) return;
+
+            // 2. Obtener el contenedor de las imágenes
+            const imagesContainer = carousel.querySelector('.carousel-images');
+            if (!imagesContainer) return;
+            
+            // 3. Obtener todas las imágenes dentro de ese contenedor
+            const images = imagesContainer.querySelectorAll('img');
+            if (images.length === 0) return;
+
+            let current = -1;
+            // 4. Encontrar el índice actual y remover la clase 'active'
+            for (let i = 0; i < images.length; i++) {
+                if (images[i].classList.contains('active')) {
+                    current = i;
+                    images[i].classList.remove('active');
+                    break;
+                }
+            }
+            
+            // Si no se encuentra ninguna activa (ej. al cargar la página), iniciamos en el primer índice
+            // Aunque ya deberíamos tener la clase 'active' en el HTML, esta es una seguridad extra.
+            if (current === -1) current = 0;
+
+
+            // 5. Calcular siguiente índice
+            let next = (current + direction + images.length) % images.length;
+
+            // 6. Activar nueva imagen
+            images[next].classList.add('active');
+        }
+    </script>
+</body>
+
+</html>
